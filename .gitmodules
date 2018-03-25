@@ -1,3 +1,3 @@
 [submodule "jupyterlab-docker"]
 	path = jupyterlab-docker
-	url = https://github.com/mikebirdgeneau/jupyterlab-docker
+	url = https://github.com/Team-Sensor-Fusion/jupyterlab-docker
