@@ -140,24 +140,19 @@ def extract_traffic_light(src_images, dst_dir, tf_session):
         logging.info('Working on image ' + image_path)
         src_dir, src_name = os.path.split(image_path)
         image_np = cv2.imread(image_path)
-        # the array based representation of the image will be used later in order to prepare the
-        # result image with boxes and labels on it.
-        # image_np = load_image_into_numpy_array(image)
-        # Expand dimensions since the model expects images to have shape: [1,
-        # None, None, 3]
-        image_np_expanded = np.expand_dims(image_np, axis=0)
-        # Actual detection.
-        output_dict = run_inference_for_single_image(image_np[..., ::-1],
-                                                     tf_session)
-        detected_tl_boxes = output_dict['detection_boxes'][
-            output_dict['detection_classes'] == 10]
+        if image_np is not None:
+            # Actual detection.
+            output_dict = run_inference_for_single_image(image_np[..., ::-1],
+                                                         tf_session)
+            detected_tl_boxes = output_dict['detection_boxes'][
+                output_dict['detection_classes'] == 10]
 
-        for i, b in enumerate(detected_tl_boxes):
-            x = (b[[1, 3]] * image_np.shape[1]).astype(int)
-            y = (b[[0, 2]] * image_np.shape[0]).astype(int)
-            fn = src_name + '_' + str(i) + '.jpg'
-            cv2.imwrite(
-                os.path.join(dst_dir, fn), image_np[y[0]:y[1], x[0]:x[1]])
+            for i, b in enumerate(detected_tl_boxes):
+                x = (b[[1, 3]] * image_np.shape[1]).astype(int)
+                y = (b[[0, 2]] * image_np.shape[0]).astype(int)
+                fn = src_name + '_' + str(i) + '.jpg'
+                cv2.imwrite(
+                    os.path.join(dst_dir, fn), image_np[y[0]:y[1], x[0]:x[1]])
 
 
 def main():
