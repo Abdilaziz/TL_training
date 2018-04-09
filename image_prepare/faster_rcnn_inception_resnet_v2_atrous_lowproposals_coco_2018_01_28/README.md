@@ -1,1 +1,1 @@
-python -m tensorflow.python.tools.optimize_for_inference --input frozen_inference_graph.pb --output frozen_inference_graph_opt.pb --input_names=image_tensor --output_names=num_detections,detection_classes,detection_boxes,detection_scores
+python3 -m tensorflow.python.tools.freeze_graph --input_graph=frozen_inference_graph.pb --input_checkpoint=model.ckpt --output_graph=frozen_inference_graph_opt.pb --output_node_names=num_detections,detection_classes,detection_boxes,detection_scores --input_binary=true --input_meta_graph=model.ckpt.meta 
