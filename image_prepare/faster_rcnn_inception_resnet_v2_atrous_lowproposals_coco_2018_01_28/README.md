@@ -1,0 +1,1 @@
+python -m tensorflow.python.tools.optimize_for_inference --input frozen_inference_graph.pb --output frozen_inference_graph_opt.pb --input_names=image_tensor --output_names=num_detections,detection_classes,detection_boxes,detection_scores
